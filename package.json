@@ -1,0 +1,44 @@
+{
+  "name": "sycle-gateway",
+  "version": "0.1.0",
+  "engines": [
+    "node >= 0.10.0"
+  ],
+  "main": "server/server.js",
+  "dependencies": {
+    "async": "^1.2.1",
+    "body-parser": "1.x.x",
+    "bootable": "0.2.x",
+    "bootable-environment": "0.2.x",
+    "compression": "^1.5.0",
+    "connect-powered-by": "0.1.x",
+    "cors": "^2.7.1",
+    "debug": "^2.2.0",
+    "ejs": "0.8.x",
+    "errorhandler": "1.x.x",
+    "express": "4.x.x",
+    "express-session": "^1.11.3",
+    "expressx": "^0.1.0",
+    "http-proxy": "^1.11.1",
+    "jugglingdb": "^0.3.0",
+    "jugglingdb-mysql": "0.0.10",
+    "limiter": "^1.0.5",
+    "lodash": "^3.9.3",
+    "loopback-policy": "^1.0.0-beta1",
+    "method-override": "2.x.x",
+    "metrics": "^0.1.9",
+    "morgan": "1.x.x",
+    "serve-favicon": "2.x.x",
+    "serve-static": "1.9.x",
+    "sira-express-rest": "^0.1.2",
+    "sira-express-veriuser": "0.0.2",
+    "strong-express-metrics": "^2.0.1",
+    "sycle-component-oauth2": "sycle/sycle-component-oauth2",
+    "sycle-express-explorer": "latest",
+    "syclify": "latest",
+    "witty": "0.6.x"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

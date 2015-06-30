@@ -1,0 +1,7 @@
+{
+  "initial:before": {
+    "expressx#logger": {
+      "enabled": true
+    }
+  }
+}
