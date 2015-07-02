@@ -30,11 +30,10 @@
     "morgan": "1.x.x",
     "serve-favicon": "2.x.x",
     "serve-static": "1.9.x",
-    "sira-express-rest": "^0.1.2",
-    "sira-express-veriuser": "0.0.2",
     "strong-express-metrics": "^2.0.1",
     "sycle-component-oauth2": "sycle/sycle-component-oauth2",
     "sycle-express-explorer": "latest",
+    "sycle-express-rest": "^0.1.3",
     "syclify": "latest",
     "witty": "0.6.x"
   },

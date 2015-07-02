@@ -20,7 +20,7 @@ module.exports = function (done) {
         db: this.get('db')
     });
 
-    sapp.enable('auth');    // enable auth
+    sapp.enable('auth');    // enable authentication
     sapp.enable('model:public'); // disable model public default
 
     this.sapp = sapp;

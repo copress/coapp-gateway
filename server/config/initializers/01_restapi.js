@@ -1,4 +1,4 @@
 module.exports = function () {
     var restApiRoot = this.get('restApiRoot');
-    this.use(restApiRoot, require('sira-express-rest')(this.sapp));
+    this.use(restApiRoot, require('sycle-express-rest')(this.sapp));
 };
