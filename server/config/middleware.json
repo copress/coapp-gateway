@@ -7,9 +7,6 @@
     "connect-powered-by": {
       "params": "sycle-gateway"
     },
-    "expressx#favicon": {
-      "params": "public/favicon.ico"
-    },
     "cors": {
     },
     "strong-express-metrics": {
@@ -113,6 +110,6 @@
     ]
   },
   "final:after": {
-    "errorhandler": {"params": {"log": false}}
+    "errorhandler": {"params": {"log": true}}
   }
 }

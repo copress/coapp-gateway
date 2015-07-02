@@ -29,17 +29,18 @@ app.phase(bootable.initializers(__dirname + '/config/initializers'));
 app.phase(witty.boot.middleware(__dirname + '/config'));
 app.phase(witty.boot.routes(__dirname + '/config/routes'));
 
-app.start = function (callback) {
-    // Boot the application.  The phases registered above will be executed
-    // sequentially, resulting in a fully initialized server that is listening
-    // for requests.
-    app.boot(function (err) {
-        if (err) {
-            console.error(err.message);
-            console.error(err.stack);
-            return process.exit(-1);
-        }
 
+// Boot the application.  The phases registered above will be executed
+// sequentially, resulting in a fully initialized server that is listening
+// for requests.
+app.boot(function (err) {
+    if (err) {
+        console.error(err.message);
+        console.error(err.stack);
+        return process.exit(-1);
+    }
+
+    app.start = function (callback) {
         var servers = [];
         var host = app.get('host') || "0.0.0.0";
         var httpPort = app.get('port') || app.get('http-port') || app.get('httpPort');
@@ -73,6 +74,7 @@ app.start = function (callback) {
 
         app.close = function (cb) {
             app.removeAllListeners('started');
+            app.removeAllListeners('loaded');
 
             async.eachSeries(servers, function (server, callback) {
                 server.close(callback);
@@ -80,16 +82,19 @@ app.start = function (callback) {
                 servers = [];
                 cb();
             });
-        }
-    });
-};
+        };
+    };
+    app.loaded = true;
+    app.emit('loaded');
+
+    if (isMain) {
+        app.start();
+    }
+
+});
 
 function printServerListeningMsg(protocol, host, port) {
     var url = protocol + '://' + host + ':' + port;
     console.log('Web server listening at', url);
-}
-
-if (isMain) {
-    app.start();
 }
 
