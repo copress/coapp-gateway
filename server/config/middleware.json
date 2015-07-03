@@ -45,12 +45,12 @@
         "session": false,
         "scopes": {
           "demo": [
-            "/me", "/protected", "/_internal", "/api/notes"
+            "/me", "/protected", "/_internal", "/api/note"
           ],
           "note": [
             {
               "methods": "all",
-              "path": "/api/notes"
+              "path": "/api/note"
             }
           ]
         }
@@ -108,6 +108,9 @@
         "paths": ["/admin"]
       }
     ]
+  },
+  "final": {
+    "expressx#urlNotFound": {}
   },
   "final:after": {
     "errorhandler": {"params": {"log": true}}

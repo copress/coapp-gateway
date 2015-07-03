@@ -29,6 +29,56 @@ app.phase(bootable.initializers(__dirname + '/config/initializers'));
 app.phase(witty.boot.middleware(__dirname + '/config'));
 app.phase(witty.boot.routes(__dirname + '/config/routes'));
 
+app.start = function (callback) {
+    var servers = [];
+    var host = app.get('host') || "0.0.0.0";
+    var httpPort = app.get('port') || app.get('http-port') || app.get('httpPort');
+    var httpsPort = app.get('https-port') || app.get('httpsPort');
+
+    async.series([
+        function (callback) {
+            if (httpPort) {
+                servers.push(http.createServer(app.express).listen(httpPort, host, function () {
+                    if (isMain) printServerListeningMsg('http', host, httpPort);
+                    callback();
+                }));
+            } else {
+                callback();
+            }
+        },
+        function (callback) {
+            if (httpsPort) {
+                servers.push(https.createServer(httpsOptions, app.express).listen(httpsPort, host, function () {
+                    if (isMain) printServerListeningMsg('https', host, httpsPort);
+                    callback();
+                }));
+            } else {
+                callback();
+            }
+        }
+    ], function () {
+        app.emit('started');
+        callback && callback();
+    });
+
+    app.close = function (cb) {
+        app.removeAllListeners('started');
+        app.removeAllListeners('loaded');
+
+        async.eachSeries(servers, function (server, callback) {
+            server.close(callback);
+        }, function done() {
+            servers = [];
+            cb();
+        });
+    };
+
+    function printServerListeningMsg(protocol, host, port) {
+        var url = protocol + '://' + host + ':' + port;
+        console.log('Web server listening at', url);
+    }
+
+};
 
 // Boot the application.  The phases registered above will be executed
 // sequentially, resulting in a fully initialized server that is listening
@@ -40,50 +90,6 @@ app.boot(function (err) {
         return process.exit(-1);
     }
 
-    app.start = function (callback) {
-        var servers = [];
-        var host = app.get('host') || "0.0.0.0";
-        var httpPort = app.get('port') || app.get('http-port') || app.get('httpPort');
-        var httpsPort = app.get('https-port') || app.get('httpsPort');
-
-        async.series([
-            function (callback) {
-                if (httpPort) {
-                    servers.push(http.createServer(app.express).listen(httpPort, host, function () {
-                        if (isMain) printServerListeningMsg('http', host, httpPort);
-                        callback();
-                    }));
-                } else {
-                    callback();
-                }
-            },
-            function (callback) {
-                if (httpsPort) {
-                    servers.push(https.createServer(httpsOptions, app.express).listen(httpsPort, host, function () {
-                        if (isMain) printServerListeningMsg('https', host, httpsPort);
-                        callback();
-                    }));
-                } else {
-                    callback();
-                }
-            }
-        ], function () {
-            app.emit('started');
-            callback && callback();
-        });
-
-        app.close = function (cb) {
-            app.removeAllListeners('started');
-            app.removeAllListeners('loaded');
-
-            async.eachSeries(servers, function (server, callback) {
-                server.close(callback);
-            }, function done() {
-                servers = [];
-                cb();
-            });
-        };
-    };
     app.loaded = true;
     app.emit('loaded');
 
@@ -92,9 +98,3 @@ app.boot(function (err) {
     }
 
 });
-
-function printServerListeningMsg(protocol, host, port) {
-    var url = protocol + '://' + host + ':' + port;
-    console.log('Web server listening at', url);
-}
-
