@@ -7,7 +7,7 @@ module.exports = function (app, done) {
 
     console.log('Generating Samples Data');
     console.log('-----------------------');
-    var Application = sapp.models['OAuthClientApplication'];
+    var Application = sapp.models['Application'];
     // Hack to set the app id to a fixed value so that we don't have to change
     // the client settings
     Application.hook('beforeSave', function (inst, next) {
