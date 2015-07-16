@@ -1,7 +1,7 @@
-{
+module.exports = {
   "initial:before": {
     "expressx#logger": {
-      "enabled": false,
+      "enabled": true,
       "params": "combined"
     },
     "connect-powered-by": {
@@ -34,7 +34,7 @@
     }
   },
   "auth": {
-    "sycle-component-oauth2#authenticate": {
+    "copress-component-oauth2#authenticate": {
       "paths": [
         "/_internal",
         "/protected",
@@ -115,4 +115,4 @@
   "final:after": {
     "errorhandler": {"params": {"log": true}}
   }
-}
+};

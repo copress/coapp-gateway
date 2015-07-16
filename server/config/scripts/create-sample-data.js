@@ -3,11 +3,9 @@ var sslCert = require('../../private/ssl_cert');
 var samples = require('../sample-data.json');
 
 module.exports = function (app, done) {
-    var sapp = app.sapp;
-
     console.log('Generating Samples Data');
     console.log('-----------------------');
-    var Application = sapp.models['Application'];
+    var Application = app.models['Application'];
     // Hack to set the app id to a fixed value so that we don't have to change
     // the client settings
     Application.hook('beforeSave', function (inst, next) {
@@ -25,7 +23,7 @@ module.exports = function (app, done) {
 
     function createUsers(done) {
         async.each(samples.users, function createUser(user, done) {
-            sapp.models.User.findOrCreate({where: {username: user.username}}, user,
+            app.models.User.findOrCreate({where: {username: user.username}}, user,
                 function (err, user) {
                     if (!err) {
                         console.log('User registered: id=%s username=%s password=%s',

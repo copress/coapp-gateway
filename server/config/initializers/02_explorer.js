@@ -1,20 +1,21 @@
-module.exports = function () {
+module.exports = function (c) {
+    var app = c.app;
     var explorer;
     try {
-        explorer = require('sycle-express-explorer');
+        explorer = require('copress-explorer');
     } catch(err) {
         console.log(
-            'Run `npm install sycle-express-explorer` to enable the Sycle explorer'
+            'Run `npm install copress-explorer` to enable the Copress explorer'
         );
         return;
     }
 
-    var restApiRoot = this.get('restApiRoot');
+    var restApiRoot = app.get('restApiRoot');
 
-    var explorerApp = explorer(this.sapp, { basePath: restApiRoot });
-    this.use('/explorer', explorerApp);
-    this.once('ready', function() {
-        var baseUrl = this.get('url').replace(/\/$/, '');
+    var explorerApp = explorer(app.sapp, { basePath: restApiRoot });
+    app.middleware('routes:before','/explorer', explorerApp);
+    c.once('ready', function() {
+        var baseUrl = app.get('url').replace(/\/$/, '');
         // express 4.x uses `mountpath`
         // express 3.x uses `route`
         var explorerPath = explorerApp.mountpath || explorerApp.route;

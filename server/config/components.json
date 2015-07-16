@@ -1,0 +1,11 @@
+{
+  "copress-component-sycle": {
+    "models": [".", "..", "copress-component-oauth2"],
+    "auth": true
+  },
+  "copress-component-oauth2": {
+    "loginPage": "/login",
+    "loginPath": "/login",
+    "addHttpHeaders": "X-"
+  }
+}

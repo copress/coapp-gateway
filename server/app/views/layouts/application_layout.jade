@@ -1,0 +1,20 @@
+html
+    head
+        title= title
+        != csrf_meta_tag()
+    body
+        .navbar
+            .navbar-inner
+                .container
+                    a.brand(href='#') Project name
+        .container
+            - var flash = request.flash('info').pop(); if (flash) {
+            .alert-message.info= flash
+            - }
+            - flash = request.flash('error').pop(); if (flash) {
+            .alert-message.error= flash
+            - }
+            != body
+            hr
+            footer
+                p © Company 2015

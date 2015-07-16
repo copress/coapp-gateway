@@ -1,11 +1,9 @@
-// Draw routes.  Witty's router provides expressive syntax for drawing
-// routes, including support for resourceful routes, namespaces, and nesting.
-// MVC routes can be mapped to controllers using convenient
-// `controller#action` shorthand.  Standard middleware in the form of
-// `function(req, res, next)` is also fully supported.  Consult the Witty
-// Guide on [routing](http://wittyjs.org/guide/routing.html) for additional
-// information.
-module.exports = function routes() {
-    //this.root('pages#main');
-    this.get('/login', 'pages#login');
+module.exports = function routes(map) {
+    // Generic routes. Add all your routes below this line
+    // feel free to remove generic routes
+    map.all(':controller/:action');
+    map.all(':controller/:action/:id');
+
+    map.root('main#index');
+    map.get('/login', 'main#login');
 };
